@@ -9,7 +9,7 @@
 import CoreLocation
 import MapKit
 
-class LocationManager: NSObject, CLLocationManagerDelegate, ObservableObject {
+class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var region = MKCoordinateRegion();
     private let manager = CLLocationManager()
     
@@ -59,6 +59,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate, ObservableObject {
            print("Entered geofence!")
            triggerAlarm {
                print("Alarm has been triggered")
+               provideHapticFeedback()
            }
        }
 
@@ -67,6 +68,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate, ObservableObject {
            triggerAlarm {
                // Run your custom function or code here
                print("Custom function executed on alarm trigger")
+               provideHapticFeedback()
            }
        }
 

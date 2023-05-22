@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct Nano2ElvinSestomiPersonalApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     @StateObject private var coreDataManager : CoreDataManager = CoreDataManager();
     

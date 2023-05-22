@@ -14,6 +14,8 @@
 		AC22275B2A19076000D15592 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC22275A2A19076000D15592 /* CoreDataManager.swift */; };
 		AC22275D2A190A4D00D15592 /* listComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC22275C2A190A4D00D15592 /* listComponent.swift */; };
 		AC22275F2A19439200D15592 /* DetailTodoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC22275E2A19439200D15592 /* DetailTodoList.swift */; };
+		AC2227642A1AABA300D15592 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2227632A1AABA300D15592 /* Helper.swift */; };
+		AC2227662A1AAD3E00D15592 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2227652A1AAD3E00D15592 /* AppDelegate.swift */; };
 		ACAE76BA2A17A1A400F3B9D3 /* Nano2ElvinSestomiPersonalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAE76B92A17A1A400F3B9D3 /* Nano2ElvinSestomiPersonalApp.swift */; };
 		ACAE76BC2A17A1A400F3B9D3 /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAE76BB2A17A1A400F3B9D3 /* FormView.swift */; };
 		ACAE76BE2A17A1A600F3B9D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACAE76BD2A17A1A600F3B9D3 /* Assets.xcassets */; };
@@ -31,6 +33,8 @@
 		AC22275C2A190A4D00D15592 /* listComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = listComponent.swift; sourceTree = "<group>"; };
 		AC22275E2A19439200D15592 /* DetailTodoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTodoList.swift; sourceTree = "<group>"; };
 		AC2227602A1A23A600D15592 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		AC2227632A1AABA300D15592 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		AC2227652A1AAD3E00D15592 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ACAE76B62A17A1A400F3B9D3 /* Nano2ElvinSestomiPersonal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nano2ElvinSestomiPersonal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACAE76B92A17A1A400F3B9D3 /* Nano2ElvinSestomiPersonalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nano2ElvinSestomiPersonalApp.swift; sourceTree = "<group>"; };
 		ACAE76BB2A17A1A400F3B9D3 /* FormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
@@ -108,6 +112,7 @@
 		ACAE76CB2A17A21300F3B9D3 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				AC2227632A1AABA300D15592 /* Helper.swift */,
 				ACAE76C82A17A1EA00F3B9D3 /* CoreLocationManager.swift */,
 				AC22275A2A19076000D15592 /* CoreDataManager.swift */,
 			);
@@ -147,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				ACAE76B92A17A1A400F3B9D3 /* Nano2ElvinSestomiPersonalApp.swift */,
+				AC2227652A1AAD3E00D15592 /* AppDelegate.swift */,
 			);
 			path = Applications;
 			sourceTree = "<group>";
@@ -238,9 +244,11 @@
 				ACAE76C92A17A1EA00F3B9D3 /* CoreLocationManager.swift in Sources */,
 				AC22275F2A19439200D15592 /* DetailTodoList.swift in Sources */,
 				AC22275B2A19076000D15592 /* CoreDataManager.swift in Sources */,
+				AC2227662A1AAD3E00D15592 /* AppDelegate.swift in Sources */,
 				AC2227562A18FFFB00D15592 /* CoreDataModel.xcdatamodeld in Sources */,
 				AC2227522A18F85100D15592 /* ToDoListView.swift in Sources */,
 				AC22275D2A190A4D00D15592 /* listComponent.swift in Sources */,
+				AC2227642A1AABA300D15592 /* Helper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

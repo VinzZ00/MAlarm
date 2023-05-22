@@ -45,7 +45,7 @@ struct FormView: View {
                     
                     Button {
                         
-                        var tdlist : TodoList = TodoList(context: moc)
+                        let tdlist : TodoList = TodoList(context: moc)
                         tdlist.id = UUID()
                         tdlist
                             .dateTime = selectedTime
@@ -64,99 +64,101 @@ struct FormView: View {
                             print("Saving failed with description ", err.localizedDescription)
                         }
                         
-                        //Event Kit
-                        
-                        
-                        appViewModel.eventStore.requestAccess(to: .event) {
-                            granted, error in
-                            if granted {
-                                
-                                let reminder = EKReminder(eventStore: appViewModel.eventStore)
-                                reminder.title  = eventName
-                                reminder.calendar = appViewModel.eventStore.defaultCalendarForNewReminders()
-                                
-                                //                                var etaTime : Double = 0;
-                                
-                                appViewModel.getETA(source: appViewModel.locationManager.region.center, destination: appViewModel.tappedCoordinate!) {
-                                    response, err in
-                                    if let error  = err {
-                                        print("Error calculate ETA, with Description : \(error.localizedDescription)")
-                                    }
-                                    
-                                    //                                    var minutes : Int = 0
-                                    if let resp = response {
-                                        var reminderTime = self.selectedTime
-                                        
-                                        reminderTime.addTimeInterval(-(resp.expectedTravelTime))
-                                        
-                                        let dueDateTime = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: reminderTime)
-                                        
-                                        reminder.dueDateComponents = dueDateTime
-                                        
-                                        var calendar = Calendar.current
-                                        
-                                        var event : EKEvent = EKEvent(eventStore: appViewModel.eventStore)
-                                        event.calendarItemIdentifier
-                                        event.title = eventName
-                                        event.calendar = appViewModel.eventStore.defaultCalendarForNewEvents
-                                        event.startDate = self.selectedTime
-                                        
-                                        event.endDate = self.selectedTime.addingTimeInterval(3600*60)
-                                        
-                                        
-                                        let timeAlarm : EKAlarm = EKAlarm(absoluteDate: self.selectedTime)
-                                        
-                                        timeAlarm.relativeOffset = -resp.expectedTravelTime
-                                        
-                                        
-                                        
-                                        
-                                        event.addAlarm(timeAlarm)
-                                        
-                                        
-                                        
-                                        
-                                        do {
-                                            try appViewModel.eventStore.save(reminder, commit: true)
-                                            try appViewModel.eventStore.save(event, span: .thisEvent)
-                                            scheduleLocalNotification(for: reminder)
-                                            
-                                            
-                                            print("Reminder and alarm created successfully")
-                                        } catch {
-                                            print("Error creating reminder: \(error.localizedDescription)")
-                                        }
-                                    }
-                                    
-                                }
-                                
-                                
-                                
-                                //                                appViewModel.getETA(source: appViewModel.locationManager.region.center, destination: CLLocationCoordinate2D(latitude: tdlist.latitude, longitude: tdlist
-                                //                                    .longitude)) {
-                                //                                    response, err in
-                                //                                    if let error  = err {
-                                //                                        print("Error calculate ETA \(error.localizedDescription)")
-                                //                                    }
-                                //
-                                //                                    if let resp = response {
-                                //                                        etaTime = resp.expectedTravelTime
-                                //                                    }
-                                //                                }
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                            } else {
-                                print("Access denied")
+                        appViewModel.getETA(source: appViewModel.locationManager.region.center, destination: appViewModel.tappedCoordinate!) {
+                            response, err in
+                            if let error  = err {
+                                print("Error calculate ETA, with Description : \(error.localizedDescription)")
                             }
-                        }
-                        
-                        withAnimation {
-                            appViewModel.showForm = false;
+                            //
+                            //                                    //                                    var minutes : Int = 0
+                            if let resp = response {
+                                
+                                var calendar : Calendar = Calendar.current
+                                
+                                
+                                
+                                var dateComponent = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: selectedTime.addingTimeInterval(-resp.expectedTravelTime))
+                                
+                                
+                                
+                                scheduleAlarm(coordinate: appViewModel.tappedCoordinate!, day: dateComponent.day!, month: dateComponent.month!, year: dateComponent.year!, hour: dateComponent.hour!, minute: dateComponent.minute!, title: eventName, description: eventDescription)
+                                
+                                print("alarm scheduled")
+                            }
+                            //Event Kit
+                            
+                            
+                            //                        appViewModel.eventStore.requestAccess(to: .event) {
+                            //                            granted, error in
+                            //                            if granted {
+                            //
+                            //                                let reminder = EKReminder(eventStore: appViewModel.eventStore)
+                            //                                reminder.title  = eventName
+                            //                                reminder.calendar = appViewModel.eventStore.defaultCalendarForNewReminders()
+                            //
+                            //                                //                                var etaTime : Double = 0;
+                            //
+                            //                                appViewModel.getETA(source: appViewModel.locationManager.region.center, destination: appViewModel.tappedCoordinate!) {
+                            //                                    response, err in
+                            //                                    if let error  = err {
+                            //                                        print("Error calculate ETA, with Description : \(error.localizedDescription)")
+                            //                                    }
+                            //
+                            //                                    //                                    var minutes : Int = 0
+                            //                                    if let resp = response {
+                            //                                        var reminderTime = self.selectedTime
+                            //
+                            //                                        reminderTime.addTimeInterval(-(resp.expectedTravelTime))
+                            //
+                            //                                        let dueDateTime = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: reminderTime)
+                            //
+                            //                                        reminder.dueDateComponents = dueDateTime
+                            //
+                            //                                        var calendar = Calendar.current
+                            //
+                            //                                        var event : EKEvent = EKEvent(eventStore: appViewModel.eventStore)
+                            //                                        event.calendarItemIdentifier
+                            //                                        event.title = eventName
+                            //                                        event.calendar = appViewModel.eventStore.defaultCalendarForNewEvents
+                            //                                        event.startDate = self.selectedTime
+                            //
+                            //                                        event.endDate = self.selectedTime.addingTimeInterval(3600*60)
+                            //
+                            //
+                            //                                        let timeAlarm : EKAlarm = EKAlarm(absoluteDate: self.selectedTime)
+                            //
+                            //                                        timeAlarm.relativeOffset = -resp.expectedTravelTime
+                            //
+                            //
+                            //
+                            //
+                            //                                        event.addAlarm(timeAlarm)
+                            //
+                            //
+                            //
+                            //
+                            //                                        do {
+                            //                                            try appViewModel.eventStore.save(reminder, commit: true)
+                            //                                            try appViewModel.eventStore.save(event, span: .thisEvent)
+                            //                                            scheduleLocalNotification(for: reminder)
+                            //
+                            //
+                            //                                            print("Reminder and alarm created successfully")
+                            //                                        } catch {
+                            //                                            print("Error creating reminder: \(error.localizedDescription)")
+                            //                                        }
+                            //                                    }
+                            //
+                            //                                }
+                            //
+                            //                            } else {
+                            //                                print("Access denied")
+                            //                            }
+                            //                        }
+                            
+                            withAnimation {
+                                appViewModel.showForm = false;
+                            }
                         }
                     } label: {
                         Text("Done")
@@ -254,55 +256,55 @@ struct FormView: View {
         }
     }
     
-    private func scheduleLocalNotification(for reminder: EKReminder) {
-        let content = UNMutableNotificationContent()
-        content.title = "Reminder"
-        content.body = reminder.title
-        content.sound = UNNotificationSound.default
-        
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: reminder.dueDateComponents!.date!)
-        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
-        
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-        
-        // Add a custom action to the notification request
-        let customAction = UNNotificationAction(identifier: "customAction", title: "Custom Action", options: [])
-        let category = UNNotificationCategory(identifier: "eventCategory", actions: [customAction], intentIdentifiers: [], options: [])
-        UNUserNotificationCenter.current().setNotificationCategories([category])
-        
-        UNUserNotificationCenter.current().add(request) { error in
-            if let error = error {
-                print("Error scheduling notification: \(error.localizedDescription)")
-            } else {
-                print("Notification scheduled successfully")
-            }
-        }
-    }
+    //            private func scheduleLocalNotification(for reminder: EKReminder) {
+    //                let content = UNMutableNotificationContent()
+    //                content.title = "Reminder"
+    //                content.body = reminder.title
+    //                content.sound = UNNotificationSound.default
+    //
+    //                let calendar = Calendar.current
+    //                let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: reminder.dueDateComponents!.date!)
+    //                let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+    //
+    //                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+    //
+    //                // Add a custom action to the notification request
+    //                let customAction = UNNotificationAction(identifier: "customAction", title: "Custom Action", options: [])
+    //                let category = UNNotificationCategory(identifier: "eventCategory", actions: [customAction], intentIdentifiers: [], options: [])
+    //                UNUserNotificationCenter.current().setNotificationCategories([category])
+    //
+    //                UNUserNotificationCenter.current().add(request) { error in
+    //                    if let error = error {
+    //                        print("Error scheduling notification: \(error.localizedDescription)")
+    //                    } else {
+    //                        print("Notification scheduled successfully")
+    //                    }
+    //                }
+    //            }
+    //        }
+    //
+    //class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+    //
+    //    var coordinate : CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+    //    let locationManager : LocationManager = LocationManager()
+    //
+    //    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    //        UNUserNotificationCenter.current().delegate = self
+    //        return true
+    //    }
+    //
+    //    // Handle custom actions for the notification
+    //    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+    //        if response.actionIdentifier == "customAction" {
+    //
+    //            locationManager.startMonitoringGeofence(coordinate: coordinate)
+    //
+    //            print("Custom action triggered!")
+    //        }
+    //
+    //        completionHandler()
+    //    }
+    //}
+    
 }
-
-class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     
-    var coordinate : CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
-    let locationManager : LocationManager = LocationManager()
-    
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        UNUserNotificationCenter.current().delegate = self
-        return true
-    }
-    
-    // Handle custom actions for the notification
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        if response.actionIdentifier == "customAction" {
-            
-            locationManager.startMonitoringGeofence(coordinate: coordinate)
-            
-            print("Custom action triggered!")
-        }
-        
-        completionHandler()
-    }
-}
-
-
-
