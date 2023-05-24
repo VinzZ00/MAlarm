@@ -25,13 +25,12 @@ struct SearchView: View {
         }
     
     var body: some View {
-        NavigationView {
             if showMap {
                 MapView()
                     .transition(.slide)
             } else {
                 VStack {
-                    TextField(searchText, text: $searchText)
+                    TextField((appViewModel.locationName != "") ? "Search" : appViewModel.locationName , text: $searchText)
                         .padding()
                         .background(Color(.systemGray6))
                         .cornerRadius(8)
@@ -86,17 +85,13 @@ struct SearchView: View {
                                         print(coordinate)
                                     }
                                 }
-                                
-                                
-                                
                                 withAnimation {
                                     appViewModel.searchPage = false;
                                 }
                             }
                     }
-                }
+                }.padding(.vertical)
             }
-        }
     }
 }
 

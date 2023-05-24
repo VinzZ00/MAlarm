@@ -14,6 +14,9 @@ struct DetailTodoList: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appViewModel : AppViewModel
     @Environment(\.managedObjectContext) var moc
+    
+    var timer = Timer.publish(every: 1, on: .main, in: .default).autoconnect()
+    
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .center){
@@ -108,5 +111,11 @@ struct DetailTodoList: View {
                     }
                 }
         )
+        .onReceive(timer) {
+            _ in
+            DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                appViewModel.objectWillChange.send()
+            }
+        }
     }
 }

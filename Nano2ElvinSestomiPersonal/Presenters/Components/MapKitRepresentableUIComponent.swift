@@ -39,6 +39,7 @@ struct MapView: UIViewRepresentable {
         context.coordinator.updateAnnotation(mapView: mapView, coordinate: appViewModel.tappedCoordinate, userCoordinate : appViewModel.locationManager.region.center)
         if let tappedCoordinate = appViewModel.tappedCoordinate {
             print("Masuk tapped coordinate didapatkan")
+            print("Tapped coordinate : \(appViewModel.tappedCoordinate)")
             let userCoordinate = appViewModel.locationManager.region.center
             
             let request = MKDirections.Request()

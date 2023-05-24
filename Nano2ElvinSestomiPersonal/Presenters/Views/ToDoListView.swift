@@ -10,32 +10,14 @@ import CoreLocation
 import CoreData
 
 struct ToDoListView: View {
-    
+    @State var formView : Bool = false;
+//    @State var formView : Bool = false;
     @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "dateTime", ascending: false)]) var todoLists : FetchedResults<TodoList>
     @State var todolist : TodoList?
     @StateObject var appViewModel : AppViewModel = AppViewModel()
     @Environment(\.managedObjectContext) var moc;
-
-    //    private var fetchedResultsController: NSFetchedResultsController<TodoList>? {
-//        didSet {
-//            performFetch()
-//        }
-//    }
-//
-//    init() {
-//        performFetch()
-//    }
     
-//    private func performFetch() {
-//        fetchedResultsController?.managedObjectContext.performAndWait {
-//            do {
-//                try fetchedResultsController?.performFetch()
-//            } catch {
-//                // Handle fetch error
-//            }
-//        }
-//    }
-    
+    var timer = Timer.publish(every: 1, on: .main, in: .default).autoconnect()
     
     var body: some View {
         if appViewModel.showForm {
@@ -60,7 +42,8 @@ struct ToDoListView: View {
                     Spacer()
                     Button{
                         withAnimation {
-                            appViewModel.showForm = true;
+//                            appViewModel.showForm = true;
+                            formView = true;
                         }
                     } label: {
                         Text("+")
@@ -82,12 +65,19 @@ struct ToDoListView: View {
                     }
                 }
             }
+            .sheet(isPresented: $formView) {
+                withAnimation {
+                    FormView()
+                        .onAppear{
+                            appViewModel.tappedCoordinate = nil
+                            appViewModel.locationName = ""
+                        }
+                        .environmentObject(appViewModel)
+                        .transition(.move(edge: .bottom))
+                }
+            }
             .transition(.move(edge: .leading))
             .onAppear {
-                
-                //                if let tdlist = todoLists.first {
-                //                    tdlist.status = "Completed"
-                //                }
                 
                 let fetchRequest: NSFetchRequest<TodoList> = TodoList.fetchRequest()
                 
@@ -114,8 +104,6 @@ struct ToDoListView: View {
                 } catch {
                     print("erorr Fetching data")
                 }
-                
-//                performFetch()
                 
                 try? moc.save();
             }

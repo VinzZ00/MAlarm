@@ -29,9 +29,11 @@ struct FormView: View {
     
     var body: some View {
         if (appViewModel.searchPage) {
-            SearchView()
-                .transition(.move(edge: .bottom))
-                .environmentObject(appViewModel)
+            VStack{
+                SearchView()
+                    .transition(.move(edge: .bottom))
+                    .environmentObject(appViewModel)
+            }
         } else {
             VStack {
                 HStack(alignment: .center){
@@ -187,7 +189,7 @@ struct FormView: View {
                         )
                         .padding(.bottom, 8)
                         
-                        TextField((appViewModel.locationName != nil) ? appViewModel.locationName : "Search", text: $appViewModel.locationName)
+                        TextField((appViewModel.locationName != "") ? appViewModel.locationName : "Search", text: $appViewModel.locationName)
                             .padding()
                             .background(Color(.systemGray6))
                             .cornerRadius(8)
@@ -255,56 +257,5 @@ struct FormView: View {
             
         }
     }
-    
-    //            private func scheduleLocalNotification(for reminder: EKReminder) {
-    //                let content = UNMutableNotificationContent()
-    //                content.title = "Reminder"
-    //                content.body = reminder.title
-    //                content.sound = UNNotificationSound.default
-    //
-    //                let calendar = Calendar.current
-    //                let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: reminder.dueDateComponents!.date!)
-    //                let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
-    //
-    //                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-    //
-    //                // Add a custom action to the notification request
-    //                let customAction = UNNotificationAction(identifier: "customAction", title: "Custom Action", options: [])
-    //                let category = UNNotificationCategory(identifier: "eventCategory", actions: [customAction], intentIdentifiers: [], options: [])
-    //                UNUserNotificationCenter.current().setNotificationCategories([category])
-    //
-    //                UNUserNotificationCenter.current().add(request) { error in
-    //                    if let error = error {
-    //                        print("Error scheduling notification: \(error.localizedDescription)")
-    //                    } else {
-    //                        print("Notification scheduled successfully")
-    //                    }
-    //                }
-    //            }
-    //        }
-    //
-    //class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
-    //
-    //    var coordinate : CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
-    //    let locationManager : LocationManager = LocationManager()
-    //
-    //    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    //        UNUserNotificationCenter.current().delegate = self
-    //        return true
-    //    }
-    //
-    //    // Handle custom actions for the notification
-    //    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-    //        if response.actionIdentifier == "customAction" {
-    //
-    //            locationManager.startMonitoringGeofence(coordinate: coordinate)
-    //
-    //            print("Custom action triggered!")
-    //        }
-    //
-    //        completionHandler()
-    //    }
-    //}
-    
 }
     

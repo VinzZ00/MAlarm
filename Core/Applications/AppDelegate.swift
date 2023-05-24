@@ -50,9 +50,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // For example, call a custom function
         let notificationIdentifier = response.notification.request.identifier
         
-        let coordinate = notificationIdentifier.components(separatedBy: ",")
-        
-        handleAlarmTriggered(latitude: Double(coordinate[0])!, longitude: Double(coordinate[1])!)
+        if notificationIdentifier != "GeofenceNotification" {
+            let coordinate = notificationIdentifier.components(separatedBy: ",")
+            handleAlarmTriggered(latitude: Double(coordinate[0])!, longitude: Double(coordinate[1])!)
+        }
         
         completionHandler()
     }
@@ -60,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     // Custom function to execute when the alarm is triggered
     func handleAlarmTriggered(latitude : Double, longitude : Double) {
         // Perform your custom actions here
-        var locationManager : LocationManager = LocationManager()
+        let locationManager : LocationManager = LocationManager()
         
         locationManager.startMonitoringGeofence(coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude))
     }
