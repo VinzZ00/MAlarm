@@ -58,7 +58,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 
        func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
            print("Entered geofence!")
-           triggerAlarm {
+           triggerAlarm(title: "Entering Task Location", body: "You have Entered the task Location") {
                print("Alarm has been triggered")
                provideHapticFeedback()
            }
@@ -66,17 +66,17 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 
        func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
            print("Exited geofence!")
-           triggerAlarm {
+           triggerAlarm(title: "Exiting Task Location", body: "You have exited the task Location!") {
                // Run your custom function or code here
                print("Custom function executed on alarm trigger")
                provideHapticFeedback()
            }
        }
 
-       func triggerAlarm(completion: (() -> Void)?) {
+    func triggerAlarm(title : String, body : String ,completion: (() -> Void)?) {
            let content = UNMutableNotificationContent()
-           content.title = "Geofence Alert"
-           content.body = "You have entered/exited the geofence."
+        content.title = title
+           content.body = body
 
            let request = UNNotificationRequest(identifier: "GeofenceNotification", content: content, trigger: nil)
            UNUserNotificationCenter.current().add(request) { error in

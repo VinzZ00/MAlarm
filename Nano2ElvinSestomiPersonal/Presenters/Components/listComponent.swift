@@ -41,6 +41,7 @@ struct listComponent: View {
                 if let name =  todoList.name {
                     Text(name)
                         .font(.system(size: 15, weight: .light, design: .rounded))
+                        .frame(width: 120)
                 }
             }.padding(.trailing, 8)
                 .padding(.top, 5)

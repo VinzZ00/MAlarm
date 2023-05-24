@@ -11,7 +11,7 @@ import CoreData
 
 struct ToDoListView: View {
     @State var formView : Bool = false;
-//    @State var formView : Bool = false;
+    //    @State var formView : Bool = false;
     @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "dateTime", ascending: false)]) var todoLists : FetchedResults<TodoList>
     @State var todolist : TodoList?
     @StateObject var appViewModel : AppViewModel = AppViewModel()
@@ -35,77 +35,91 @@ struct ToDoListView: View {
                 .transition(.move(edge: .trailing))
                 .environmentObject(appViewModel)
         } else {
-            VStack(){
-                HStack{
-                    Text("Todo List")
-                        .font(.system(size: 30, weight: .bold))
-                    Spacer()
-                    Button{
-                        withAnimation {
-//                            appViewModel.showForm = true;
-                            formView = true;
+            NavigationView {
+                VStack(){
+                    //                    HStack{
+                    //                        Text("Todo List")
+                    //                            .font(.system(size: 30, weight: .bold))
+                    //                        Spacer()
+                    //                        Button{
+                    //                            withAnimation {
+                    //                                //                            appViewModel.showForm = true;
+                    //                                formView = true;
+                    //                            }
+                    //                        } label: {
+                    //                            Text("+")
+                    //                                .font(.system(size: 30, weight: .bold))
+                    //                        }
+                    //                    }.padding(.horizontal, 20)
+                    //                    .padding(.top, 20)
+                    ScrollView(.vertical, showsIndicators: false) {
+                        ForEach(todoLists) {
+                            tdlist in
+                            listComponent(todoList: tdlist)
+                                .onTapGesture {
+                                    appViewModel.tappedCoordinate = CLLocationCoordinate2D(latitude: tdlist.latitude, longitude: tdlist.longitude)
+                                    self.todolist = tdlist
+                                    withAnimation {
+                                        appViewModel.showDetail = true
+                                    }
+                                }
                         }
-                    } label: {
-                        Text("+")
-                            .font(.system(size: 30, weight: .bold))
                     }
-                }.padding(.horizontal, 20)
-                //                    .padding(.top, 20)
-                ScrollView(.vertical) {
-                    ForEach(todoLists) {
-                        tdlist in
-                        listComponent(todoList: tdlist)
-                            .onTapGesture {
-                                appViewModel.tappedCoordinate = CLLocationCoordinate2D(latitude: tdlist.latitude, longitude: tdlist.longitude)
-                                self.todolist = tdlist
-                                withAnimation {
-                                    appViewModel.showDetail = true
+                }
+                .sheet(isPresented: $formView) {
+                    withAnimation {
+                        FormView()
+                            .onAppear{
+                                appViewModel.tappedCoordinate = nil
+                                appViewModel.locationName = ""
+                            }
+                            .environmentObject(appViewModel)
+                            .transition(.move(edge: .bottom))
+                    }
+                }
+                .transition(.move(edge: .leading))
+                .onAppear {
+                    
+                    let fetchRequest: NSFetchRequest<TodoList> = TodoList.fetchRequest()
+                    
+                    do {
+                        let results = try moc.fetch(fetchRequest)
+                        for entity in results {
+                            // Update the entity here
+                            if let date = entity.dateTime {
+                                if Date().compare(date) == .orderedDescending {
+                                    entity.status = "Complete"
+                                } else {
+                                    entity.status = "Incomplete"
                                 }
                             }
-                    }
-                }
-            }
-            .sheet(isPresented: $formView) {
-                withAnimation {
-                    FormView()
-                        .onAppear{
-                            appViewModel.tappedCoordinate = nil
-                            appViewModel.locationName = ""
                         }
-                        .environmentObject(appViewModel)
-                        .transition(.move(edge: .bottom))
-                }
-            }
-            .transition(.move(edge: .leading))
-            .onAppear {
-                
-                let fetchRequest: NSFetchRequest<TodoList> = TodoList.fetchRequest()
-                
-                do {
-                    let results = try moc.fetch(fetchRequest)
-                    for entity in results {
-                        // Update the entity here
-                        if let date = entity.dateTime {
-                            if Date().compare(date) == .orderedDescending {
-                                entity.status = "Complete"
-                            } else {
-                                entity.status = "Incomplete"
-                            }
+                        do {
+                            try moc.save()
+                            // Successfully saved
+                        } catch {
+                            print("error Updating data")
+                            
                         }
-                    }
-                    do {
-                        try moc.save()
-                        // Successfully saved
-                    } catch {
-                        print("error Updating data")
                         
+                    } catch {
+                        print("erorr Fetching data")
                     }
                     
-                } catch {
-                    print("erorr Fetching data")
+                    try? moc.save();
                 }
-                
-                try? moc.save();
+                .navigationTitle("Todo List")
+                .navigationBarItems(trailing:
+                                        Button{
+                    withAnimation {
+                        //                            appViewModel.showForm = true;
+                        formView = true;
+                    }
+                } label: {
+                    Text("+")
+                        .font(.system(size: 30, weight: .bold))
+                }
+                )
             }
         }
     }

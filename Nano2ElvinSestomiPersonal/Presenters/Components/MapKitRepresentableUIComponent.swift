@@ -65,9 +65,11 @@ struct MapView: UIViewRepresentable {
                 
                 print("Route Di temukan")
                 
+                var region : MKCoordinateRegion = MKCoordinateRegion(center: tappedCoordinate, span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5))
+                
                 mapView.removeOverlays(mapView.overlays)
                 mapView.addOverlay(route.polyline)
-                
+                mapView.setRegion(region, animated: true)
             }
         }
         
