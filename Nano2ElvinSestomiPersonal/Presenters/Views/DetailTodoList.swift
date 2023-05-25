@@ -152,6 +152,13 @@ struct DetailTodoList: View {
                     }
                 }
             }.navigationTitle(Text("\(todoList.name!.isEmpty ? "No Name" : todoList.name!)"))
+                .navigationBarItems(leading:
+                                        Button {
+                    appViewModel.showDetail = false;
+                } label: {
+                    Text("Back")
+                }
+                )
         }
     }
 }
