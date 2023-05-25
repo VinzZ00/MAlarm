@@ -31,7 +31,7 @@ struct FormView: View {
         if (appViewModel.searchPage) {
             VStack{
                 SearchView()
-                    .transition(.move(edge: .bottom))
+                    .transition(.slide)
                     .environmentObject(appViewModel)
             }
         } else {
@@ -177,7 +177,7 @@ struct FormView: View {
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10)
                                     .stroke(
-                                        (colorScheme == .dark) ? .white : .black
+                                        (colorScheme == .dark) ? .white : .white.opacity(0)
                                         , lineWidth: 1)
                             )
                             .padding(.bottom, 8)
@@ -193,6 +193,12 @@ struct FormView: View {
                             .padding()
                             .background(Color(.systemGray6))
                             .cornerRadius(8)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(
+                                        (colorScheme == .dark) ? .white : .gray.opacity(0.6)
+                                        , lineWidth: 1)
+                            )
                             .onTapGesture {
                                 withAnimation {
                                     appViewModel.searchPage = true

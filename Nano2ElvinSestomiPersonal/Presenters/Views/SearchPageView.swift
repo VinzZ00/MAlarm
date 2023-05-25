@@ -19,21 +19,28 @@ struct SearchView: View {
     @Environment(\.colorScheme) var colorScheme
     
     init() {
-            let completer = MKLocalSearchCompleter()
-            completer.resultTypes = .address
-            searchCompleterObserver = SearchCompleterObserver(completer: completer)
-        }
+        let completer = MKLocalSearchCompleter()
+        completer.resultTypes = .address
+        searchCompleterObserver = SearchCompleterObserver(completer: completer)
+    }
     
     var body: some View {
-            if showMap {
-                MapView()
-                    .transition(.slide)
-            } else {
+        if showMap {
+            MapView()
+                .transition(.slide)
+        } else {
+            NavigationView{
                 VStack {
-                    TextField((appViewModel.locationName != "") ? "Search" : appViewModel.locationName , text: $searchText)
+                    TextField((appViewModel.locationName != "") ? appViewModel.locationName : "Search" , text: $searchText)
                         .padding()
                         .background(Color(.systemGray6))
                         .cornerRadius(8)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(
+                                    (colorScheme == .dark) ? .white.opacity(0.6) : .gray.opacity(0)
+                                    , lineWidth: 1)
+                        )
                         .padding(.horizontal)
                         .onChange(of: searchText, perform: { value in
                             searchCompleterObserver.completer.queryFragment = value
@@ -91,7 +98,19 @@ struct SearchView: View {
                             }
                     }
                 }.padding(.vertical)
+                    .navigationBarItems(leading:
+                                            Button{
+                        withAnimation {
+                            appViewModel.searchPage = false;
+                        }
+                    } label : {
+                        Text("Back")
+                    }
+                    )
+                    .navigationTitle("Search Page")
+                    .navigationBarTitleDisplayMode(.inline)
             }
+        }
     }
 }
 
