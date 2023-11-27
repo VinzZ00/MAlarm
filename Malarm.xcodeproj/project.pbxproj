@@ -35,7 +35,7 @@
 		AC2227602A1A23A600D15592 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		AC2227632A1AABA300D15592 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		AC2227652A1AAD3E00D15592 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		ACAE76B62A17A1A400F3B9D3 /* Nano2ElvinSestomiPersonal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nano2ElvinSestomiPersonal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ACAE76B62A17A1A400F3B9D3 /* Malarm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Malarm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACAE76B92A17A1A400F3B9D3 /* Nano2ElvinSestomiPersonalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nano2ElvinSestomiPersonalApp.swift; sourceTree = "<group>"; };
 		ACAE76BB2A17A1A400F3B9D3 /* FormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
 		ACAE76BD2A17A1A600F3B9D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -74,7 +74,7 @@
 		ACAE76B72A17A1A400F3B9D3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				ACAE76B62A17A1A400F3B9D3 /* Nano2ElvinSestomiPersonal.app */,
+				ACAE76B62A17A1A400F3B9D3 /* Malarm.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -169,9 +169,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		ACAE76B52A17A1A400F3B9D3 /* Nano2ElvinSestomiPersonal */ = {
+		ACAE76B52A17A1A400F3B9D3 /* Malarm */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = ACAE76C42A17A1A600F3B9D3 /* Build configuration list for PBXNativeTarget "Nano2ElvinSestomiPersonal" */;
+			buildConfigurationList = ACAE76C42A17A1A600F3B9D3 /* Build configuration list for PBXNativeTarget "Malarm" */;
 			buildPhases = (
 				ACAE76B22A17A1A400F3B9D3 /* Sources */,
 				ACAE76B32A17A1A400F3B9D3 /* Frameworks */,
@@ -181,9 +181,9 @@
 			);
 			dependencies = (
 			);
-			name = Nano2ElvinSestomiPersonal;
+			name = Malarm;
 			productName = Nano2ElvinSestomiPersonal;
-			productReference = ACAE76B62A17A1A400F3B9D3 /* Nano2ElvinSestomiPersonal.app */;
+			productReference = ACAE76B62A17A1A400F3B9D3 /* Malarm.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -201,7 +201,7 @@
 					};
 				};
 			};
-			buildConfigurationList = ACAE76B12A17A1A400F3B9D3 /* Build configuration list for PBXProject "Nano2ElvinSestomiPersonal" */;
+			buildConfigurationList = ACAE76B12A17A1A400F3B9D3 /* Build configuration list for PBXProject "Malarm" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -214,7 +214,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				ACAE76B52A17A1A400F3B9D3 /* Nano2ElvinSestomiPersonal */,
+				ACAE76B52A17A1A400F3B9D3 /* Malarm */,
 			);
 		};
 /* End PBXProject section */
@@ -441,7 +441,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		ACAE76B12A17A1A400F3B9D3 /* Build configuration list for PBXProject "Nano2ElvinSestomiPersonal" */ = {
+		ACAE76B12A17A1A400F3B9D3 /* Build configuration list for PBXProject "Malarm" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				ACAE76C22A17A1A600F3B9D3 /* Debug */,
@@ -450,7 +450,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		ACAE76C42A17A1A600F3B9D3 /* Build configuration list for PBXNativeTarget "Nano2ElvinSestomiPersonal" */ = {
+		ACAE76C42A17A1A600F3B9D3 /* Build configuration list for PBXNativeTarget "Malarm" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				ACAE76C52A17A1A600F3B9D3 /* Debug */,
